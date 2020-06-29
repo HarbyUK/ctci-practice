@@ -14,20 +14,24 @@
 
     Improvements:
 
-    Time Complexity - O(n)
+    Time Complexity - O(n) (or O(n^2) if you take the isSubstring into account)
     Space Complexity - O(1)
+
+    The time complexity could be reduced if you concat s1 onto s1:
+
+    - waterbottle + waterbottle = waterbottlewaterbottle
+    - erbottlewat is a substring from indexes 3 to 13 inclusive
+    - This will reduce iteration around s2's length
+    - Time complexity now O(1) (or O(n) if you take isSubstring into account)
 */
 
 const stringRotation = (s1, s2) => {
     if (s1.length != s2.length)
         return false;
 
-    for (let i = 1; i <= s2.length; i++) {
-        const rotateAttempt = s2.slice(-1 * i) + s2.slice(0, -1 * i);
+    if (isSubstring(s1.concat(s1), s2))
+        return true;
 
-        if (isSubstring(s1, rotateAttempt))
-            return true;
-    }
     return false;
 };
 
@@ -39,6 +43,6 @@ const testAlgorithm = (s1, s2) => {
     console.log(`Is "${s2}" a rotation of "${s1}"? ${stringRotation(s1, s2)}`);
 }
 
-testAlgorithm("waterbottle", "erbottlewat");
-testAlgorithm("waterbottle", "erbottlewta");
-testAlgorithm("waterbottle", "erbottlwat");
+testAlgorithm("waterbottle", "erbottlewat"); // TRUE
+testAlgorithm("waterbottle", "erbottlewta"); // FALSE
+testAlgorithm("waterbottle", "erbottlwat");  // FALSE
