@@ -50,6 +50,8 @@
     Time Complexity - O(i)
     Space Complexity - O(1)
 
+    Can try to improve cleanliness of code by abstracting functions
+
 */
 
 const oneAway = (value1, value2) => {
@@ -60,35 +62,15 @@ const oneAway = (value1, value2) => {
     if (value1 === value2)
         return true;
     
-    if (value1.length === value2.length) {
-        let isOneAway = false;
-        for (let i = 0; i < value1.length; i++) {
-            if (value1.charAt(i) !== value2.charAt(i))
-                if (isOneAway)
-                    return false;
-                else
-                    isOneAway = true;
-        }
-        return true;
-    }
+    if (value1.length === value2.length)
+        return testByReplace(value1, value2);
+    
+    if (value1.length > value2.length)
+        return testByRemove(value1, value2);
+    
+    if (value1.length < value2.length)
+        return testByInsert(value1, value2);
 
-    if (value1.length > value2.length) {
-        for (let i = 0; i < value1.length; i++) {
-            const removedValue = value1.slice(0, i) + value1.slice(i + 1);
-            if (removedValue === value2)
-                return true;
-        }
-        return false;
-    }
-
-    if (value1.length < value2.length) {
-        for (let i = 0; i < value2.length; i++) {
-            const removedValue = value2.slice(0, i) + value2.slice(i + 1);
-            if (removedValue === value1)
-                return true;
-        }
-        return false;
-    }
     return false;
 };
 
@@ -99,6 +81,33 @@ const validateParameters = (value1, value2) => {
 
 const sanitizeValue = (value) => {
     return value.toLowerCase().replace(/[^a-z]+/g, "");
+};
+
+const testByReplace = (value1, value2) => {
+    let isOneAway = false;
+    for (let i = 0; i < value1.length; i++) {
+        if (value1.charAt(i) !== value2.charAt(i))
+            if (isOneAway)
+                return false;
+            else
+                isOneAway = true;
+    }
+    return true;
+}
+
+const testByRemove = (value1, value2) => {
+    for (let i = 0; i < value1.length; i++) {
+        const removedValue = value1.slice(0, i) + value1.slice(i + 1);
+        if (removedValue === value2)
+            return true;
+    }
+    return false;
+}
+
+const testByInsert = (value1, value2) => {
+    // You can test an insert by removing a character from value 2
+    // so is effectively a test by remove in reverse
+    return testByRemove(value2, value1);
 };
 
 const testAlgorithm = (value1, value2) => {
