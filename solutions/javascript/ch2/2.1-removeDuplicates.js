@@ -25,23 +25,32 @@
 
     Time Complexity - O(n)
     Space Complexity - O(n)
+
+    To improve, the follow up question must be considered. Removing the buffer
+    means removing the Set. Using the runner technique, it is possible to look
+    ahead for duplicates and remove as necessary.
+
+    After making changes:
+
+    Time Complexity - O(n^2) - Worse than before
+    Space Complexity - O(1) - Better than before
 */
 
 const removeDuplicates = (list) => {
     if (list.head === null || list.head === undefined)
         throw new Error("List is empty");
 
-    let duplicates = new Set();
-    let previousNode = null;
     let currentNode = list.head;
 
     while (currentNode) {
-        if (duplicates.has(currentNode.value)) {
-            previousNode.next = currentNode.next;
-            list.length--;
-        } else {
-            duplicates.add(currentNode.value);
-            previousNode = currentNode;
+        let runnerNode = currentNode;
+        
+        while (runnerNode.next) {
+            if (runnerNode.next.value === currentNode.value)
+                runnerNode.next = runnerNode.next.next;
+            else {
+                runnerNode = runnerNode.next;
+            }
         }
         currentNode = currentNode.next;
     }
