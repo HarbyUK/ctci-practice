@@ -15,6 +15,10 @@ pale, bake -> false
 
 def oneAway(str1, str2):
 
+    #Check if we are zero edits away first as per question:
+    if str1 == str2:
+        return True
+
     #Case of if the first letter is not the same but the rest match - we're one away.
     if str1[0] != str2[0] and str1[1:] == str2[1:]:
         return True
