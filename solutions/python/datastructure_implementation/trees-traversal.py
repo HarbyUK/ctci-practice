@@ -24,7 +24,7 @@ class tree(object):
 
     def insertLeft(self,newNode):
         if self.left == None:
-            self.left = newNode
+            self.left = tree(newNode)
         else:
             t = tree(newNode)               # If the node already has a child, we have to move it one level down
             t.left = self.left              # Create a new node object, move current left child to left child of new
@@ -32,7 +32,7 @@ class tree(object):
 
     def insertRight(self,newNode):
         if self.right == None:
-            self.right = newNode
+            self.right = tree(newNode)
         else:
             t = tree(newNode)
             t.right = self.right
@@ -52,4 +52,30 @@ class tree(object):
 
 
 r = tree('a')
-print(r.getRootVal())
+#print(r.getRootVal())
+
+
+
+def inOrder(tree):
+    if tree:
+        inOrder(tree.getLeft())
+        print(tree.getRootVal())
+        inOrder(tree.getRight())
+
+
+
+
+r.insertLeft('b')
+r.insertRight('c')
+r.getLeft().insertLeft('d')
+#print(r.getLeft().getLeft().getRootVal())
+
+print(inOrder(r))
+
+"""
+                    a
+                  /   \
+                 b     c
+                /
+               d     
+"""
