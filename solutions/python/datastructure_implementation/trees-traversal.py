@@ -28,8 +28,8 @@ class tree(object):
         else:
             t = tree(newNode)               # If the node already has a child, we have to move it one level down
             t.left = self.left              # Create a new node object, move current left child to left child of new
-            self.left = t                   # then set the current node's left child to this object
-
+            self.left = t                   # then set the current node's left child to this object. - To append an item to a leaf node we don't use this.
+                                            # to do that would be eg: nodename.getLeft().insertLeft()('key')
     def insertRight(self,newNode):
         if self.right == None:
             self.right = tree(newNode)
@@ -78,7 +78,7 @@ def preOrder(tree):
         print(tree.getRootVal())
         preOrder(tree.getLeft())
         preOrder(tree.getRight())
-        
+
 
 def postOrder(tree):
     if tree:
