@@ -51,8 +51,18 @@ class tree(object):
         return self.key
 
 
+# Make a tree that looks like this:
+"""
+                    a
+                  /   \
+                 b     c
+                /
+               d     
+"""
 r = tree('a')
-#print(r.getRootVal())
+r.insertLeft('b')
+r.insertRight('c')
+r.getLeft().insertLeft('d')
 
 
 
@@ -63,19 +73,16 @@ def inOrder(tree):
         inOrder(tree.getRight())
 
 
+def preOrder(tree):
+    if tree:
+        print(tree.getRootVal())
+        preOrder(tree.getLeft())
+        preOrder(tree.getRight())
+        
 
+def postOrder(tree):
+    if tree:
+        postOrder(tree.getLeft())
+        postOrder(tree.getRight())
+        print(tree.getRootVal())
 
-r.insertLeft('b')
-r.insertRight('c')
-r.getLeft().insertLeft('d')
-#print(r.getLeft().getLeft().getRootVal())
-
-print(inOrder(r))
-
-"""
-                    a
-                  /   \
-                 b     c
-                /
-               d     
-"""
